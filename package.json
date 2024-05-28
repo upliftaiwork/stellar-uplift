@@ -1,0 +1,12 @@
+{
+  "name": "stellar-uplift",
+  "version": "1.0.0",
+  "description": "Stellar Uplift project",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo 'No build step defined'"
+  },
+  "dependencies": {
+    "firebase": "^9.0.0"
+  }
+}
