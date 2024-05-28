@@ -1,5 +1,9 @@
 {
   "projects": {
-    "default": "stellaruplift"
-  }
+    "default": "stellaruplift",
+    "staging": "stellaruplift"
+  },
+  "targets": {},
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
 }
