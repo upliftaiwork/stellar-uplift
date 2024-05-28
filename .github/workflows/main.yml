@@ -1,4 +1,4 @@
-name: Firebase Hosting
+name: Deploy to Firebase Hosting on merge
 
 on:
   push:
@@ -10,24 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - uses: actions/checkout@v4
+    - run: npm install
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
+    - name: Build project
+      run: npm run build --if-present
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build project
-        run: npm run build --if-present
-
-      - name: Deploy to Firebase Hosting
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_STELLARUPLIFT}}'
-          channelId: live
-          projectId: 'stellaruplift'
+    - name: Deploy to Firebase Hosting
+      uses: FirebaseExtended/action-hosting-deploy@v0
+      with:
+        repoToken: '${{ secrets.GITHUB_TOKEN }}'
+        firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
+        projectId: 'stellaruplift'
