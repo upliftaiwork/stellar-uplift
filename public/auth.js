@@ -1,55 +1,46 @@
-// auth.js
-
-document.addEventListener('DOMContentLoaded', function() {
+// public/auth.js
+document.addEventListener('DOMContentLoaded', function () {
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+  
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  
+    // Initialize Firebase Authentication
     const auth = firebase.auth();
-    const loginForm = document.getElementById('loginForm');
-    const signupForm = document.getElementById('signupForm');
   
-    // Login
-    loginForm.addEventListener('submit', (e) => {
+    // Sign up function
+    document.getElementById('signup-form').addEventListener('submit', (e) => {
       e.preventDefault();
-      const email = loginForm['email'].value;
-      const password = loginForm['password'].value;
-  
-      auth.signInWithEmailAndPassword(email, password).then((cred) => {
-        console.log('User logged in:', cred.user);
-      }).catch((error) => {
-        console.error('Error logging in:', error);
-      });
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-password').value;
+      auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          console.log('User signed up:', userCredential.user);
+        })
+        .catch((error) => {
+          console.error('Error signing up:', error);
+        });
     });
   
-    // Signup
-    signupForm.addEventListener('submit', (e) => {
+    // Sign in function
+    document.getElementById('signin-form').addEventListener('submit', (e) => {
       e.preventDefault();
-      const email = signupForm['email'].value;
-      const password = signupForm['password'].value;
-  
-      auth.createUserWithEmailAndPassword(email, password).then((cred) => {
-        console.log('User signed up:', cred.user);
-      }).catch((error) => {
-        console.error('Error signing up:', error);
-      });
-    });
-  
-    // Logout
-    const logout = document.getElementById('logout');
-    logout.addEventListener('click', (e) => {
-      e.preventDefault();
-      auth.signOut().then(() => {
-        console.log('User logged out');
-      }).catch((error) => {
-        console.error('Error logging out:', error);
-      });
-    });
-  
-    // Auth state change
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        console.log('User logged in:', user);
-        // Show user dashboard or other authenticated content
-      } else {
-        console.log('User logged out');
-        // Show login/signup forms or other unauthenticated content
-      }
+      const email = document.getElementById('signin-email').value;
+      const password = document.getElementById('signin-password').value;
+      auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          console.log('User signed in:', userCredential.user);
+        })
+        .catch((error) => {
+          console.error('Error signing in:', error);
+        });
     });
   });
